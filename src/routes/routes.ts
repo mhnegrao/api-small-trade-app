@@ -3,11 +3,11 @@ import { Router } from "express";
 import { Prisma, PrismaClient } from "@prisma/client";
 
 const UsuarioController = require("../controllers/usuarioController");
-// const LancamentoController = require("../controllers/lancamentoController");
-// const MensalidadeControllclearer = require("../controllers/mensalidadeController");
-// const ServicoController = require("../controllers/servicoController");
-// const AgendaController = require("../controllers/agendaController");
-// const LoginController = require("../controllers/loginController");
+const LancamentoController = require("../controllers/lancamentoController");
+const MensalidadeControllclearer = require("../controllers/mensalidadeController");
+const ServicoController = require("../controllers/servicoController");
+ const AgendaController = require("../controllers/agendaController");
+const LoginController = require("../controllers/loginController");
 
 const routes = Router();
 const prisma = new PrismaClient();
@@ -22,9 +22,21 @@ routes.get("/user/:id", UsuarioController.show);
 //@ts-ignore
 routes.post("/user", UsuarioController.store);
 //@ts-ignore
-routes.put("/user/:id", UsuarioController.update);
+routes.put("/user", UsuarioController.update);
 //@ts-ignore
 routes.delete("/user/:id", UsuarioController.delete);
+
+
+//@ts-ignore
+routes.get("/task", AgendaController.index);
+//@ts-ignore
+routes.get("/task/:id", AgendaController.show);
+//@ts-ignore
+routes.post("/task", AgendaController.store);
+//@ts-ignore
+routes.put("/task/", AgendaController.update);
+//@ts-ignore
+routes.delete("/task/:id", AgendaController.delete);
 
 //autenticação
 //loginRoutes();

@@ -60,7 +60,7 @@ model Lancamento {
 }
 
 model Agenda {
-  id           String    @unique @default(uuid())
+  id           String   @id @default(uuid())
   idUser       String
   titulo       String
   descricao    String

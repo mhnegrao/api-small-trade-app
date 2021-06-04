@@ -41,13 +41,14 @@ class UsuarioController {
   }
 
   async update(req: express.Request<IUser>, res: express.Response) {
+    const id = req.body.id;
     try {
       const userData = await prisma.user.findUnique({
-        where: { id: req.params.id },
+        where: { id: id },
       });
-
+      req.body.updated_At = new Date();
       const userUpdate = await prisma.user.update({
-        where: { id: req.params.id },
+        where: { id: id },
         data: { ...req.body },
       });
 
