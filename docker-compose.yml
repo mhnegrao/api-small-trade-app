@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  dev-postgres-compose:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: "postgres"
+    ports:
+      - "15432:5432"
+    volumes:
+      - /home/marcelo/HomeOffice/Docker/PostgreSQL:/var/lib/postgresql/data
+    
+
+networks:
+  postgres-network:
+    driver: bridge

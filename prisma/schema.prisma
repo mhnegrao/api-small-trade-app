@@ -1,0 +1,87 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String        @id @default(uuid())
+  email        String        @unique
+  name         String?
+  password     String?
+  token        String?
+  tokenExpires String?
+  isAdmin      Boolean       @default(false)
+  created_At   DateTime      @default(now())
+  update_At    DateTime?
+  servicos     Servico[]
+  agendas      Agenda[]
+  lancamento   Lancamento[]
+  mensalidades Mensalidade[]
+}
+
+model Servico {
+  id              String    @id @default(uuid())
+  idUser          String
+  servico         String
+  descricao       String
+  cliente         String
+  fone            String?
+  email           String
+  dataSolicitacao DateTime
+  dataPrevista    DateTime
+  valor           Decimal
+  observacao      String?
+  finalizado      Boolean   @default(false)
+  pago            Boolean   @default(false)
+  dataPagamento   DateTime?
+  tipoPagamento   String?
+  usuario         User?     @relation(fields: [idUser], references: [id])
+  created_At      DateTime  @default(now())
+  update_At       DateTime?
+
+}
+
+model Lancamento {
+  id              String    @id @default(uuid())
+  idUser          String
+  descricao       String
+  dataLancamento  DateTime
+  valor           Decimal
+  observacao      String
+  tipoPlancamento String
+  usuario         User?     @relation(fields: [idUser], references: [id])
+  created_At      DateTime  @default(now())
+  updated_At      DateTime?
+
+}
+
+model Agenda {
+  id           String    @unique @default(uuid())
+  idUser       String
+  titulo       String
+  descricao    String
+  dataTarefa   DateTime?
+  prioridade   String?
+  usuario      User?     @relation(fields: [idUser], references: [id])
+  completed    Boolean   @default(false)
+  completed_At DateTime?
+  created_At   DateTime  @default(now())
+  updated_At   DateTime?
+
+}
+
+model Mensalidade {
+  id             String    @id @default(uuid())
+  idUser         String
+  tipoServico    String
+  dataVencimento DateTime
+  valorParcela   Decimal
+  usuario        User?     @relation(fields: [idUser], references: [id])
+  created_At     DateTime  @default(now())
+  updated_At     DateTime?
+
+}
